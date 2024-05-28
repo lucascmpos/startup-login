@@ -45,7 +45,12 @@ const HomePage = () => {
         Carregando informações...
       </div>
     )
-  if (error) return <div>Error: {error.message}</div>
+  if (error)
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        Error: {error.message}
+      </div>
+    )
 
   const { companies } = data
 
