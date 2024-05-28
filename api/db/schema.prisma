@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Feel free to change to SQLITE
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String    @id @default(uuid()) @db.Uuid
+  email      String    @unique
+  first_name String    @db.VarChar(127)
+  last_name  String    @db.VarChar(255)
+  // hist_previous_count Int
+  dedication String    @db.VarChar(127)
+  Company    Company[]
+  // ownership           Ownership[]
+}
+
+model Company {
+  id               String   @id @default(uuid()) @db.Uuid
+  name             String
+  description      String   @db.VarChar(4095)
+  website          String?  @db.VarChar(255)
+  businessModel    String
+  metricArrRaw     Decimal? @db.Decimal(20, 2)
+  metricArrNet     Decimal? @db.Decimal(20, 2)
+  foundation       DateTime
+  team_size        Int
+  /// Founders explain the opportunities they see
+  opportunities    String[]
+  valuation        Decimal? @db.Decimal(20, 2)
+  openings         String[]
+  /// Founder explain why they are taking investment / sell completely
+  reasoningOpening String?  @db.VarChar(4095)
+  /// temp field, ideally later have ownership
+  userId           String   @db.Uuid
+  user             User     @relation(fields: [userId], references: [id])
+  // ownership        Ownership[]
+  // markets          Market[]
+  // location         Location[]
+  // competitors      Competitor[]
+  /// keys: founder, angel, seed, seriesA, seriesB
+  // capSummary       Json
+}
