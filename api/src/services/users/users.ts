@@ -22,30 +22,21 @@ export const createUser: MutationResolvers['createUser'] = ({ input }) => {
   })
 }
 
-// No arquivo users.ts
-
-// Importe a função de login adequada
-
 export const loginUser: MutationResolvers['loginUser'] = async ({ email }) => {
   try {
-    // Procurar o usuário pelo email fornecido
     const user = await db.user.findUnique({ where: { email } })
 
-    // Se o usuário não existir, lança um erro
     if (!user) {
       throw new Error('Usuário não encontrado')
     }
 
-    // Neste exemplo, o token pode ser gerado aleatoriamente ou obtido de outra forma
     const token = 'TOKEN_AQUI'
 
-    // Retorna um objeto que inclui o token e os dados do usuário
     return {
       token,
       user,
     }
   } catch (error) {
-    // Lidar com erros
     throw new Error('Falha ao fazer login: ' + error.message)
   }
 }
